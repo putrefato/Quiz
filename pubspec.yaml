@@ -1,4 +1,4 @@
-name: aventura_heroi
+name: QuizEtec
 description: "Um jogo educativo de quiz sobre história da computação"
 
 publish_to: 'none'
@@ -28,3 +28,6 @@ flutter:
   assets:
   - assets/audio/bg_music.mp3
   - assets/audio/click.mp3
+
+  dependencies:
+    audioplayers: ^5.2.1

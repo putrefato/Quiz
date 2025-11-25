@@ -7,6 +7,7 @@ import '../models/pergunta.dart';
 import '../models/modo_jogo.dart';
 import '../services/servico_jogo.dart';
 import '../services/servico_quiz.dart';
+import '../services/gerenciador_audio.dart';
 import '../widgets/botao_personalizado.dart';
 import '../widgets/cartao_progresso.dart';
 
@@ -16,8 +17,8 @@ class TelaQuiz extends StatefulWidget {
   final ConfiguracaoModoJogo? configuracaoModo;
 
   const TelaQuiz({
-    Key? key,
-    required this.usuario,
+    Key? key, 
+    required this.usuario, 
     this.nivelInicial = 1,
     this.configuracaoModo,
   }) : super(key: key);
@@ -28,18 +29,26 @@ class TelaQuiz extends StatefulWidget {
 
 class _TelaQuizState extends State<TelaQuiz> {
   final ServicoJogo _servicoJogo = ServicoJogo();
+  final GerenciadorAudio _audio = GerenciadorAudio();
   ProgressoJogo? _progresso;
   int _nivelAtual = 1;
   int _pontuacaoAtual = 0;
   int _moedasAtuais = 0;
   bool _salvando = false;
 
+  // Sistema de vidas e tempo
+  int _vidasAtuais = 1;
+  int _comboAtual = 0;
+  int _tempoRestante = 30;
+  int _tempoTotalRestante = 120;
+  bool _isModoContraRelogio = false;
+  late Timer _timerPergunta;
+  late Timer _timerTotal;
+
   List<Pergunta> _perguntasAtuais = [];
   int _perguntaIndex = 0;
   int? _respostaSelecionada;
   bool _mostrarResultado = false;
-  int _tempoRestante = 30;
-  late Timer _timer;
 
   @override
   void initState() {
@@ -49,7 +58,8 @@ class _TelaQuizState extends State<TelaQuiz> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timerPergunta.cancel();
+    if (_isModoContraRelogio) _timerTotal.cancel();
     super.dispose();
   }
 
@@ -61,18 +71,42 @@ class _TelaQuizState extends State<TelaQuiz> {
       _pontuacaoAtual = progresso?.pontuacao ?? 0;
       _moedasAtuais = progresso?.moedas ?? 100;
     });
+    _inicializarModoJogo();
     _iniciarQuiz();
   }
 
+  void _inicializarModoJogo() {
+    if (widget.configuracaoModo != null) {
+      final modo = widget.configuracaoModo!.modo;
+      _vidasAtuais = modo.vidas;
+      _isModoContraRelogio = modo == ModoJogo.CONTRA_RELOGIO;
+      
+      // Iniciar timer total para contra-relógio
+      if (_isModoContraRelogio) {
+        _timerTotal = Timer.periodic(Duration(seconds: 1), (timer) {
+          if (_tempoTotalRestante > 0) {
+            setState(() => _tempoTotalRestante--);
+          } else {
+            timer.cancel();
+            _tempoEsgotado();
+          }
+        });
+      }
+    }
+  }
+
   void _iniciarQuiz() {
+    final categoria = widget.configuracaoModo?.categoria;
+    
     setState(() {
-      _perguntasAtuais = ServicoQuiz.obterPerguntasPorNivel(_nivelAtual);
+      _perguntasAtuais = ServicoQuiz.obterPerguntasPorNivel(_nivelAtual, categoria: categoria);
       _perguntaIndex = 0;
       _respostaSelecionada = null;
       _mostrarResultado = false;
       _tempoRestante = _obterTempoPorPergunta();
+      _comboAtual = 0;
     });
-    _iniciarTimer();
+    _iniciarTimerPergunta();
   }
 
   int _obterTempoPorPergunta() {
@@ -82,19 +116,122 @@ class _TelaQuizState extends State<TelaQuiz> {
     return 30;
   }
 
-  void _iniciarTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+  void _iniciarTimerPergunta() {
+    _timerPergunta = Timer.periodic(Duration(seconds: 1), (timer) {
       if (_tempoRestante > 0) {
-        setState(() {
-          _tempoRestante--;
-        });
+        setState(() => _tempoRestante--);
       } else {
-        _timer.cancel();
+        timer.cancel();
         if (!_mostrarResultado) {
           _verificarResposta();
         }
       }
     });
+  }
+
+  void _verificarResposta() {
+    _timerPergunta.cancel();
+    setState(() => _mostrarResultado = true);
+
+    final pergunta = _perguntasAtuais[_perguntaIndex];
+    final bool acertou = _respostaSelecionada == pergunta.respostaCorreta;
+    final int tempoUsado = _obterTempoPorPergunta() - _tempoRestante;
+    final int pontosGanhos = ServicoQuiz.calcularPontuacao(acertou, pergunta.dificuldade, tempoUsado);
+
+    // Sistema de vidas
+    if (!acertou) {
+      _vidasAtuais--;
+      _comboAtual = 0;
+      _audio.playEfeitoErro();
+    } else {
+      _comboAtual++;
+      _audio.playEfeitoAcerto();
+    }
+
+    setState(() {
+      _pontuacaoAtual += pontosGanhos;
+      _moedasAtuais += acertou ? 10 : 5;
+    });
+
+    Future.delayed(Duration(seconds: 2), () {
+      if (_vidasAtuais <= 0) {
+        _gameOver();
+      } else {
+        _proximaPergunta();
+      }
+    });
+  }
+
+  void _proximaPergunta() {
+    if (_perguntaIndex < _perguntasAtuais.length - 1) {
+      setState(() {
+        _perguntaIndex++;
+        _respostaSelecionada = null;
+        _mostrarResultado = false;
+        _tempoRestante = _obterTempoPorPergunta();
+      });
+      _iniciarTimerPergunta();
+    } else {
+      _completarNivel();
+    }
+  }
+
+  void _completarNivel() {
+    final nivelAntigo = _nivelAtual;
+    _audio.playEfeitoNivelUp();
+
+    setState(() {
+      _nivelAtual++;
+      _moedasAtuais += 50;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Parabéns! Nível $nivelAntigo completado! Nível $_nivelAtual desbloqueado! +50 moedas!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    _salvarProgresso();
+    _mostrarDialogoContinuar();
+  }
+
+  void _gameOver() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Fim de Jogo!', style: GoogleFonts.poppins()),
+        content: Text('Suas vidas acabaram!\nPontuação final: $_pontuacaoAtual', style: GoogleFonts.poppins()),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            child: Text('Voltar ao Menu', style: GoogleFonts.poppins(color: Color(0xFF6A5AE0))),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _tempoEsgotado() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Tempo Esgotado!', style: GoogleFonts.poppins()),
+        content: Text('O tempo acabou!\nPontuação final: $_pontuacaoAtual', style: GoogleFonts.poppins()),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            child: Text('Voltar ao Menu', style: GoogleFonts.poppins(color: Color(0xFF6A5AE0))),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _salvarProgresso() async {
@@ -114,67 +251,6 @@ class _TelaQuizState extends State<TelaQuiz> {
       _progresso = progresso;
       _salvando = false;
     });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Progresso salvo com sucesso!'), backgroundColor: Colors.green),
-    );
-  }
-
-  void _verificarResposta() {
-    _timer.cancel();
-    setState(() {
-      _mostrarResultado = true;
-    });
-
-    final bool acertou = _respostaSelecionada == _perguntasAtuais[_perguntaIndex].respostaCorreta;
-    final int tempoUsado = _obterTempoPorPergunta() - _tempoRestante;
-    final int pontosGanhos = ServicoQuiz.calcularPontuacao(
-      acertou,
-      _perguntasAtuais[_perguntaIndex].dificuldade,
-      tempoUsado
-    );
-
-    setState(() {
-      _pontuacaoAtual += pontosGanhos;
-      _moedasAtuais += acertou ? 10 : 5;
-    });
-
-    Future.delayed(Duration(seconds: 2), () {
-      _proximaPergunta();
-    });
-  }
-
-  void _proximaPergunta() {
-    if (_perguntaIndex < _perguntasAtuais.length - 1) {
-      setState(() {
-        _perguntaIndex++;
-        _respostaSelecionada = null;
-        _mostrarResultado = false;
-        _tempoRestante = _obterTempoPorPergunta();
-      });
-      _iniciarTimer();
-    } else {
-      _completarNivel();
-    }
-  }
-
-  void _completarNivel() {
-    final nivelAntigo = _nivelAtual;
-
-    setState(() {
-      _nivelAtual++;
-      _moedasAtuais += 50;
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Parabéns! Nível $nivelAntigo completado! Nível $_nivelAtual desbloqueado! +50 moedas!'),
-        backgroundColor: Colors.green,
-      ),
-    );
-
-    _salvarProgresso();
-    _mostrarDialogoContinuar();
   }
 
   void _mostrarDialogoContinuar() {
@@ -204,26 +280,72 @@ class _TelaQuizState extends State<TelaQuiz> {
   }
 
   Widget _buildTimer() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: _tempoRestante <= 10 ? Colors.red : Color(0xFF6A5AE0),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.timer, color: Colors.white, size: 16),
-          SizedBox(width: 4),
-          Text(
-            '$_tempoRestante seg',
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
+    if (_isModoContraRelogio) {
+      final minutos = _tempoTotalRestante ~/ 60;
+      final segundos = _tempoTotalRestante % 60;
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: _tempoTotalRestante <= 30 ? Colors.red : Color(0xFFFF9800),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.timer, color: Colors.white, size: 16),
+            SizedBox(width: 4),
+            Text(
+              '${minutos.toString().padLeft(2, '0')}:${segundos.toString().padLeft(2, '0')}',
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
             ),
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: _tempoRestante <= 10 ? Colors.red : Color(0xFF6A5AE0),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.timer, color: Colors.white, size: 16),
+            SizedBox(width: 4),
+            Text(
+              '$_tempoRestante seg',
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  Widget _buildVidas() {
+    if (widget.configuracaoModo?.modo.vidas == 999) return SizedBox();
+    
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(Icons.favorite, color: Colors.red, size: 20),
+        SizedBox(width: 4),
+        Text(
+          '$_vidasAtuais',
+          style: GoogleFonts.poppins(
+            color: Colors.red,
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -238,19 +360,25 @@ class _TelaQuizState extends State<TelaQuiz> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: Color(0xFF6A5AE0).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                'Nível $_nivelAtual • ${pergunta.dificuldade}',
-                style: GoogleFonts.poppins(
-                  color: Color(0xFF6A5AE0),
-                  fontWeight: FontWeight.w600,
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF6A5AE0).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    'Nível $_nivelAtual • ${pergunta.dificuldade}',
+                    style: GoogleFonts.poppins(
+                      color: Color(0xFF6A5AE0),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(width: 8),
+                _buildVidas(),
+              ],
             ),
             _buildTimer(),
           ],
@@ -318,6 +446,7 @@ class _TelaQuizState extends State<TelaQuiz> {
 
     return GestureDetector(
       onTap: _mostrarResultado ? null : () {
+        _audio.playEfeitoClick();
         setState(() {
           _respostaSelecionada = index;
         });

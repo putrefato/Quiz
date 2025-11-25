@@ -5,7 +5,6 @@ class GerenciadorAcessibilidade {
   factory GerenciadorAcessibilidade() => _instancia;
   GerenciadorAcessibilidade._interno();
 
-  // Configurações de acessibilidade
   double _tamanhoFonte = 1.0;
   bool _altoContraste = false;
   bool _leitorTela = false;
@@ -22,70 +21,52 @@ class GerenciadorAcessibilidade {
   // Setters
   void setTamanhoFonte(double tamanho) {
     _tamanhoFonte = tamanho.clamp(0.8, 2.0);
+    print('🔧 Tamanho da fonte alterado para: ${(_tamanhoFonte * 100).toInt()}%');
   }
 
   void setAltoContraste(bool ativo) {
     _altoContraste = ativo;
+    print('🔧 Alto contraste: ${ativo ? "ATIVADO" : "DESATIVADO"}');
   }
 
   void setLeitorTela(bool ativo) {
     _leitorTela = ativo;
+    print('🔧 Leitor de tela: ${ativo ? "ATIVADO" : "DESATIVADO"}');
   }
 
   void setAnimacoesReduzidas(bool ativo) {
     _animacoesReduzidas = ativo;
+    print('🔧 Animações reduzidas: ${ativo ? "ATIVADO" : "DESATIVADO"}');
   }
 
   void setFeedbackHaptico(bool ativo) {
     _feedbackHaptico = ativo;
+    print('🔧 Feedback háptico: ${ativo ? "ATIVADO" : "DESATIVADO"}');
   }
 
-  // Aplicar configurações ao tema
-  ThemeData aplicarAcessibilidadeAoTheme(ThemeData temaBase) {
-    return temaBase.copyWith(
-      textTheme: temaBase.textTheme.apply(
-        fontSizeFactor: _tamanhoFonte,
-      ),
-      colorScheme: _altoContraste
-          ? temaBase.colorScheme.copyWith(
-              primary: Colors.black,
-              secondary: Colors.white,
-              surface: Colors.white,
-              background: Colors.black,
-              onPrimary: Colors.white,
-              onSecondary: Colors.black,
-              onSurface: Colors.black,
-              onBackground: Colors.white,
-            )
-          : temaBase.colorScheme,
-      // Reduzir animações se solicitado
-      pageTransitionsTheme: _animacoesReduzidas
-          ? PageTransitionsTheme(
-              builders: {
-                TargetPlatform.android: ZoomPageTransitionsBuilder(),
-                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-              },
-            )
-          : temaBase.pageTransitionsTheme,
+  // Aplicar configurações ao texto
+  TextStyle aplicarFonte(TextStyle estiloBase) {
+    return estiloBase.copyWith(
+      fontSize: estiloBase.fontSize != null ? estiloBase.fontSize! * _tamanhoFonte : null,
+      color: _altoContraste ? Colors.black : estiloBase.color,
+      fontWeight: _altoContraste ? FontWeight.bold : estiloBase.fontWeight,
     );
   }
 
-  // Gerar texto semântico para leitores de tela
-  String gerarDescricaoSemantica(String texto, {String? contexto}) {
-    if (!_leitorTela) return texto;
-
-    final descricao = StringBuffer();
-    if (contexto != null) {
-      descricao.write('$contexto: ');
-    }
-    descricao.write(texto);
-
-    return descricao.toString();
+  // Aplicar ao container
+  BoxDecoration aplicarContraste(BoxDecoration decoracaoBase) {
+    if (!_altoContraste) return decoracaoBase;
+    
+    return decoracaoBase.copyWith(
+      color: Colors.white,
+      border: Border.all(color: Colors.black, width: 2),
+    );
   }
 
-  // Verificar se é necessário alto contraste
-  bool precisaAltoContraste(BuildContext context) {
-    final brightness = MediaQuery.of(context).platformBrightness;
-    return _altoContraste || brightness == Brightness.dark;
+  // Vibrar
+  void vibrar() {
+    if (_feedbackHaptico) {
+      print('📳 Vibração simulada');
+    }
   }
 }

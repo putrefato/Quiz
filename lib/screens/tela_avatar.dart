@@ -42,16 +42,44 @@ class _TelaAvatarState extends State<TelaAvatar> {
     setState(() {
       switch (item.tipo) {
         case 'rosto':
-          _avatarAtual.rosto = item.icone;
+          _avatarAtual = AvatarUsuario(
+            usuarioId: _avatarAtual.usuarioId,
+            rosto: item.icone,
+            cabelo: _avatarAtual.cabelo,
+            roupa: _avatarAtual.roupa,
+            acessorio: _avatarAtual.acessorio,
+            corFundo: _avatarAtual.corFundo,
+          );
           break;
         case 'cabelo':
-          _avatarAtual.cabelo = item.icone;
+          _avatarAtual = AvatarUsuario(
+            usuarioId: _avatarAtual.usuarioId,
+            rosto: _avatarAtual.rosto,
+            cabelo: item.icone,
+            roupa: _avatarAtual.roupa,
+            acessorio: _avatarAtual.acessorio,
+            corFundo: _avatarAtual.corFundo,
+          );
           break;
         case 'roupa':
-          _avatarAtual.roupa = item.icone;
+          _avatarAtual = AvatarUsuario(
+            usuarioId: _avatarAtual.usuarioId,
+            rosto: _avatarAtual.rosto,
+            cabelo: _avatarAtual.cabelo,
+            roupa: item.icone,
+            acessorio: _avatarAtual.acessorio,
+            corFundo: _avatarAtual.corFundo,
+          );
           break;
         case 'acessorio':
-          _avatarAtual.acessorio = item.icone;
+          _avatarAtual = AvatarUsuario(
+            usuarioId: _avatarAtual.usuarioId,
+            rosto: _avatarAtual.rosto,
+            cabelo: _avatarAtual.cabelo,
+            roupa: _avatarAtual.roupa,
+            acessorio: item.icone,
+            corFundo: _avatarAtual.corFundo,
+          );
           break;
       }
     });
@@ -59,7 +87,14 @@ class _TelaAvatarState extends State<TelaAvatar> {
 
   void _selecionarCorFundo(Color cor) {
     setState(() {
-      _avatarAtual.corFundo = cor.value.toRadixString(16).padLeft(8, '0').toUpperCase();
+      _avatarAtual = AvatarUsuario(
+        usuarioId: _avatarAtual.usuarioId,
+        rosto: _avatarAtual.rosto,
+        cabelo: _avatarAtual.cabelo,
+        roupa: _avatarAtual.roupa,
+        acessorio: _avatarAtual.acessorio,
+        corFundo: '#${cor.value.toRadixString(16).padLeft(8, '0').substring(2)}',
+      );
     });
   }
 
@@ -85,8 +120,7 @@ class _TelaAvatarState extends State<TelaAvatar> {
           ),
           ElevatedButton(
             onPressed: () {
-              // Simular compra (em app real, verificar saldo e atualizar)
-              if (ServicoAvatar.comprarItem(item, 1000)) { // Valor simulado
+              if (ServicoAvatar.comprarItem(item, 1000)) {
                 setState(() {});
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -130,9 +164,27 @@ class _TelaAvatarState extends State<TelaAvatar> {
         ],
       ),
       child: Center(
-        child: Text(
-          _avatarAtual.avatarCompleto,
-          style: TextStyle(fontSize: 48),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              _avatarAtual.rosto,
+              style: TextStyle(fontSize: 40),
+            ),
+            Text(
+              _avatarAtual.cabelo,
+              style: TextStyle(fontSize: 30),
+            ),
+            Text(
+              _avatarAtual.roupa,
+              style: TextStyle(fontSize: 25),
+            ),
+            if (_avatarAtual.acessorio.isNotEmpty)
+              Text(
+                _avatarAtual.acessorio,
+                style: TextStyle(fontSize: 20),
+              ),
+          ],
         ),
       ),
     );
@@ -173,15 +225,16 @@ class _TelaAvatarState extends State<TelaAvatar> {
       itemCount: _coresFundo.length,
       itemBuilder: (context, index) {
         final cor = _coresFundo[index];
+        final corHex = '#${cor.value.toRadixString(16).padLeft(8, '0').substring(2)}';
+        final isSelecionada = _avatarAtual.corFundo == corHex;
+        
         return GestureDetector(
           onTap: () => _selecionarCorFundo(cor),
           child: Container(
             decoration: BoxDecoration(
               color: cor,
               shape: BoxShape.circle,
-              border: _avatarAtual.corFundo == cor.value.toRadixString(16).padLeft(8, '0').toUpperCase()
-                  ? Border.all(color: Colors.white, width: 3)
-                  : null,
+              border: isSelecionada ? Border.all(color: Colors.white, width: 3) : null,
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.2),
@@ -197,6 +250,8 @@ class _TelaAvatarState extends State<TelaAvatar> {
   }
 
   Widget _buildItemAvatar(ItemAvatar item) {
+    final isSelecionado = _isItemSelecionado(item);
+    
     return GestureDetector(
       onTap: () => _selecionarItem(item),
       child: Container(
@@ -210,9 +265,7 @@ class _TelaAvatarState extends State<TelaAvatar> {
               offset: Offset(0, 2),
             ),
           ],
-          border: _isItemSelecionado(item)
-              ? Border.all(color: Color(0xFF6A5AE0), width: 2)
-              : null,
+          border: isSelecionado ? Border.all(color: Color(0xFF6A5AE0), width: 2) : null,
         ),
         child: Stack(
           children: [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/usuario.dart';
+import '../services/servico_jogo.dart';
 import 'tela_quiz.dart';
 
 class TelaSelecaoNivel extends StatefulWidget {
@@ -22,9 +23,9 @@ class _TelaSelecaoNivelState extends State<TelaSelecaoNivel> {
   }
 
   void _carregarProgresso() async {
-    // Simulação - na prática você buscaria do banco
+    final progresso = await ServicoJogo().obterProgresso(widget.usuario.id!);
     setState(() {
-      _nivelDesbloqueado = 3;
+      _nivelDesbloqueado = progresso?.nivel ?? 1;
     });
   }
 
@@ -40,25 +41,25 @@ class _TelaSelecaoNivelState extends State<TelaSelecaoNivel> {
   }
 
   Widget _buildCardNivel(int nivel, String titulo, String descricao, bool desbloqueado) {
+    final podeJogar = nivel <= _nivelDesbloqueado;
+    
     return GestureDetector(
-      onTap: desbloqueado ? () => _iniciarNivel(nivel) : null,
+      onTap: podeJogar ? () => _iniciarNivel(nivel) : null,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 8),
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: desbloqueado ? Colors.white : Colors.grey[300],
+          color: podeJogar ? Colors.white : Colors.grey[300],
           borderRadius: BorderRadius.circular(16),
-          boxShadow: desbloqueado
-              ? [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 10,
-                    offset: Offset(0, 5),
-                  ),
-                ]
-              : null,
+          boxShadow: podeJogar ? [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: Offset(0, 5),
+            )
+          ] : null,
           border: Border.all(
-            color: desbloqueado ? Color(0xFF6A5AE0) : Colors.grey,
+            color: podeJogar ? Color(0xFF6A5AE0) : Colors.grey,
             width: 2,
           ),
         ),
@@ -68,7 +69,7 @@ class _TelaSelecaoNivelState extends State<TelaSelecaoNivel> {
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: desbloqueado ? Color(0xFF6A5AE0) : Colors.grey,
+                color: podeJogar ? Color(0xFF6A5AE0) : Colors.grey,
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -92,7 +93,7 @@ class _TelaSelecaoNivelState extends State<TelaSelecaoNivel> {
                     style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: desbloqueado ? Color(0xFF1D1D1D) : Colors.grey,
+                      color: podeJogar ? Color(0xFF1D1D1D) : Colors.grey,
                     ),
                   ),
                   SizedBox(height: 4),
@@ -100,15 +101,15 @@ class _TelaSelecaoNivelState extends State<TelaSelecaoNivel> {
                     descricao,
                     style: GoogleFonts.poppins(
                       fontSize: 14,
-                      color: desbloqueado ? Color(0xFF666666) : Colors.grey,
+                      color: podeJogar ? Color(0xFF666666) : Colors.grey,
                     ),
                   ),
                 ],
               ),
             ),
             Icon(
-              desbloqueado ? Icons.lock_open : Icons.lock,
-              color: desbloqueado ? Colors.green : Colors.grey,
+              podeJogar ? Icons.lock_open : Icons.lock,
+              color: podeJogar ? Colors.green : Colors.grey,
             ),
           ],
         ),

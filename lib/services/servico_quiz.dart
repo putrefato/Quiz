@@ -1,850 +1,167 @@
 import '../models/pergunta.dart';
 
 class ServicoQuiz {
-  static final List<Pergunta> _perguntas = [
-    // NÍVEL 1 - FÁCIL (20 perguntas)
-    Pergunta(
-      id: 1,
-      pergunta: "Quem é considerado o 'pai da computação'?",
-      opcoes: ["Alan Turing", "Bill Gates", "Steve Jobs", "Charles Babbage"],
-      respostaCorreta: 3,
-      categoria: "História",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 2,
-      pergunta: "Em que ano foi criado o primeiro computador eletrônico, ENIAC?",
-      opcoes: ["1939", "1946", "1955", "1960"],
-      respostaCorreta: 1,
-      categoria: "História",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 3,
-      pergunta: "O que significa a sigla 'CPU'?",
-      opcoes: ["Computer Processing Unit", "Central Processing Unit", "Central Program Utility", "Computer Program Unit"],
-      respostaCorreta: 1,
-      categoria: "Hardware",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 4,
-      pergunta: "Qual empresa desenvolveu o sistema operacional Windows?",
-      opcoes: ["Apple", "IBM", "Microsoft", "Google"],
-      respostaCorreta: 2,
-      categoria: "Sistemas Operacionais",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 5,
-      pergunta: "Quem fundou a Apple Computer?",
-      opcoes: ["Bill Gates e Paul Allen", "Steve Jobs e Steve Wozniak", "Mark Zuckerberg", "Larry Page e Sergey Brin"],
-      respostaCorreta: 1,
-      categoria: "Empresas",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 6,
-      pergunta: "O que é um 'bug' na computação?",
-      opcoes: ["Um vírus de computador", "Um erro no software", "Um tipo de hardware", "Um programa malicioso"],
-      respostaCorreta: 1,
-      categoria: "Conceitos",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 7,
-      pergunta: "Quantos bits tem um byte?",
-      opcoes: ["4", "8", "16", "32"],
-      respostaCorreta: 1,
-      categoria: "Conceitos",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 8,
-      pergunta: "O que significa 'HTML'?",
-      opcoes: ["HyperText Markup Language", "HighTech Modern Language", "Hyper Transfer Markup Language", "Home Tool Markup Language"],
-      respostaCorreta: 0,
-      categoria: "Web",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 9,
-      pergunta: "Qual destes NÃO é um sistema operacional?",
-      opcoes: ["Linux", "Windows", "Photoshop", "macOS"],
-      respostaCorreta: 2,
-      categoria: "Sistemas Operacionais",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 10,
-      pergunta: "O que é um 'mouse' em computação?",
-      opcoes: ["Um dispositivo de entrada", "Um tipo de vírus", "Uma unidade de medida", "Um programa"],
-      respostaCorreta: 0,
-      categoria: "Hardware",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 11,
-      pergunta: "Qual destas é uma linguagem de programação?",
-      opcoes: ["HTML", "CSS", "Python", "HTTP"],
-      respostaCorreta: 2,
-      categoria: "Linguagens",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 12,
-      pergunta: "O que é um 'URL'?",
-      opcoes: ["Um tipo de cabo", "Um endereço na internet", "Um programa", "Um dispositivo"],
-      respostaCorreta: 1,
-      categoria: "Web",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 13,
-      pergunta: "Qual empresa criou o Android?",
-      opcoes: ["Apple", "Microsoft", "Google", "Samsung"],
-      respostaCorreta: 2,
-      categoria: "Sistemas Operacionais",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 14,
-      pergunta: "O que significa 'Wi-Fi'?",
-      opcoes: ["Wireless Fidelity", "Wired Fiber", "Wireless Fiber", "Wired Fidelity"],
-      respostaCorreta: 0,
-      categoria: "Redes",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 15,
-      pergunta: "Qual destes é um navegador web?",
-      opcoes: ["Excel", "Chrome", "Word", "PowerPoint"],
-      respostaCorreta: 1,
-      categoria: "Web",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 16,
-      pergunta: "O que é 'RAM'?",
-      opcoes: ["Armazenamento permanente", "Memória de acesso aleatório", "Processador", "Disco rígido"],
-      respostaCorreta: 1,
-      categoria: "Hardware",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 17,
-      pergunta: "Qual destes é um dispositivo de entrada?",
-      opcoes: ["Monitor", "Impressora", "Teclado", "Caixa de som"],
-      respostaCorreta: 2,
-      categoria: "Hardware",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 18,
-      pergunta: "O que é um 'PDF'?",
-      opcoes: ["Um formato de arquivo", "Um programa", "Um dispositivo", "Uma linguagem"],
-      respostaCorreta: 0,
-      categoria: "Conceitos",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 19,
-      pergunta: "Qual empresa criou o iPhone?",
-      opcoes: ["Samsung", "Apple", "Google", "Microsoft"],
-      respostaCorreta: 1,
-      categoria: "Dispositivos",
-      dificuldade: "Fácil",
-    ),
-    Pergunta(
-      id: 20,
-      pergunta: "O que significa 'USB'?",
-      opcoes: ["Universal Serial Bus", "United System Bus", "Universal System Board", "United Serial Board"],
-      respostaCorreta: 0,
-      categoria: "Hardware",
-      dificuldade: "Fácil",
-    ),
-
-    // NÍVEL 2 - FÁCIL/MÉDIO (20 perguntas)
-    Pergunta(
-      id: 21,
-      pergunta: "Qual foi a primeira linguagem de programação de alto nível?",
-      opcoes: ["COBOL", "FORTRAN", "LISP", "Python"],
-      respostaCorreta: 1,
-      categoria: "Linguagens",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 22,
-      pergunta: "Quem criou a linguagem de programação C?",
-      opcoes: ["Bjarne Stroustrup", "Dennis Ritchie", "James Gosling", "Guido van Rossum"],
-      respostaCorreta: 1,
-      categoria: "Linguagens",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 23,
-      pergunta: "Em que década surgiu a Internet?",
-      opcoes: ["1950", "1960", "1970", "1980"],
-      respostaCorreta: 1,
-      categoria: "Internet",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 24,
-      pergunta: "Qual foi o primeiro navegador web popular?",
-      opcoes: ["Internet Explorer", "Netscape Navigator", "Mosaic", "Firefox"],
-      respostaCorreta: 2,
-      categoria: "Internet",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 25,
-      pergunta: "O que é 'open source'?",
-      opcoes: ["Software gratuito", "Software com código fonte aberto", "Software online", "Software de teste"],
-      respostaCorreta: 1,
-      categoria: "Conceitos",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 26,
-      pergunta: "O que significa 'URL'?",
-      opcoes: ["Universal Resource Locator", "Uniform Resource Locator", "Universal Reference Link", "Uniform Reference Link"],
-      respostaCorreta: 1,
-      categoria: "Web",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 27,
-      pergunta: "Qual destes é um banco de dados relacional?",
-      opcoes: ["MongoDB", "Redis", "MySQL", "Cassandra"],
-      respostaCorreta: 2,
-      categoria: "Banco de Dados",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 28,
-      pergunta: "O que é 'HTML5'?",
-      opcoes: ["Uma versão antiga do HTML", "A versão mais recente do HTML", "Uma linguagem diferente", "Um programa"],
-      respostaCorreta: 1,
-      categoria: "Web",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 29,
-      pergunta: "Qual empresa comprou o GitHub em 2018?",
-      opcoes: ["Google", "Microsoft", "Apple", "Amazon"],
-      respostaCorreta: 1,
-      categoria: "Empresas",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 30,
-      pergunta: "O que é 'CSS'?",
-      opcoes: ["Uma linguagem de programação", "Um sistema operacional", "Uma linguagem de estilo", "Um banco de dados"],
-      respostaCorreta: 2,
-      categoria: "Web",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 31,
-      pergunta: "Qual destes NÃO é um tipo de malware?",
-      opcoes: ["Vírus", "Firewall", "Trojan", "Worm"],
-      respostaCorreta: 1,
-      categoria: "Segurança",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 32,
-      pergunta: "O que é 'JavaScript'?",
-      opcoes: ["Um sistema operacional", "Uma linguagem de programação", "Um hardware", "Um tipo de rede"],
-      respostaCorreta: 1,
-      categoria: "Linguagens",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 33,
-      pergunta: "Qual destes é um protocolo de email?",
-      opcoes: ["HTTP", "FTP", "SMTP", "TCP"],
-      respostaCorreta: 2,
-      categoria: "Redes",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 34,
-      pergunta: "O que é 'cloud computing'?",
-      opcoes: ["Computação em nuvem", "Computação local", "Computação quântica", "Computação móvel"],
-      respostaCorreta: 0,
-      categoria: "Conceitos",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 35,
-      pergunta: "Qual destes é um framework JavaScript?",
-      opcoes: ["Django", "React", "Laravel", "Spring"],
-      respostaCorreta: 1,
-      categoria: "Linguagens",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 36,
-      pergunta: "O que é 'Git'?",
-      opcoes: ["Um sistema operacional", "Um controle de versão", "Um banco de dados", "Uma linguagem"],
-      respostaCorreta: 1,
-      categoria: "Ferramentas",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 37,
-      pergunta: "Qual empresa desenvolveu o Linux?",
-      opcoes: ["Microsoft", "Apple", "Linus Torvalds", "Google"],
-      respostaCorreta: 2,
-      categoria: "Sistemas Operacionais",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 38,
-      pergunta: "O que é 'API'?",
-      opcoes: ["Um tipo de hardware", "Interface de Programação de Aplicações", "Um protocolo de rede", "Um banco de dados"],
-      respostaCorreta: 1,
-      categoria: "Conceitos",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 39,
-      pergunta: "Qual destes é um banco de dados NoSQL?",
-      opcoes: ["MySQL", "PostgreSQL", "MongoDB", "SQLite"],
-      respostaCorreta: 2,
-      categoria: "Banco de Dados",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 40,
-      pergunta: "O que é 'HTTP'?",
-      opcoes: ["HyperText Transfer Protocol", "HighTech Transfer Program", "Hyper Transfer Text Protocol", "High Transfer Text Program"],
-      respostaCorreta: 0,
-      categoria: "Web",
-      dificuldade: "Médio",
-    ),
-
-    // NÍVEL 3 - MÉDIO (20 perguntas)
-    Pergunta(
-      id: 41,
-      pergunta: "Quem inventou a World Wide Web?",
-      opcoes: ["Bill Gates", "Tim Berners-Lee", "Steve Jobs", "Mark Zuckerberg"],
-      respostaCorreta: 1,
-      categoria: "Internet",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 42,
-      pergunta: "O que é 'machine learning'?",
-      opcoes: ["Aprendizado de máquina", "Máquina de escrever", "Aprendizado manual", "Programação tradicional"],
-      respostaCorreta: 0,
-      categoria: "IA",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 43,
-      pergunta: "Qual destes é um paradigma de programação?",
-      opcoes: ["Orientação a objetos", "HTML", "CSS", "SQL"],
-      respostaCorreta: 0,
-      categoria: "Linguagens",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 44,
-      pergunta: "O que é 'SSL'?",
-      opcoes: ["Secure Socket Layer", "Simple System Language", "Secure System Link", "Simple Socket Layer"],
-      respostaCorreta: 0,
-      categoria: "Segurança",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 45,
-      pergunta: "Qual empresa criou a linguagem Java?",
-      opcoes: ["Microsoft", "Sun Microsystems", "Google", "Apple"],
-      respostaCorreta: 1,
-      categoria: "Linguagens",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 46,
-      pergunta: "O que é 'VPN'?",
-      opcoes: ["Rede Privada Virtual", "Video Private Network", "Virtual Private Network", "Video Public Network"],
-      respostaCorreta: 2,
-      categoria: "Redes",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 47,
-      pergunta: "Qual destes é um sistema de controle de versão distribuído?",
-      opcoes: ["SVN", "Git", "CVS", "Mercurial"],
-      respostaCorreta: 1,
-      categoria: "Ferramentas",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 48,
-      pergunta: "O que é 'DNS'?",
-      opcoes: ["Domain Name System", "Data Network Service", "Domain Network System", "Data Name Service"],
-      respostaCorreta: 0,
-      categoria: "Redes",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 49,
-      pergunta: "Qual destes NÃO é um tipo de dado primitivo em Java?",
-      opcoes: ["int", "String", "boolean", "double"],
-      respostaCorreta: 1,
-      categoria: "Linguagens",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 50,
-      pergunta: "O que é 'agile development'?",
-      opcoes: ["Desenvolvimento ágil", "Desenvolvimento lento", "Desenvolvimento tradicional", "Desenvolvimento manual"],
-      respostaCorreta: 0,
-      categoria: "Metodologias",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 51,
-      pergunta: "Qual destes é um container de virtualização?",
-      opcoes: ["Docker", "VMware", "VirtualBox", "Hyper-V"],
-      respostaCorreta: 0,
-      categoria: "Virtualização",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 52,
-      pergunta: "O que é 'REST'?",
-      opcoes: ["Representational State Transfer", "Remote System Transfer", "Representational System Technology", "Remote State Transfer"],
-      respostaCorreta: 0,
-      categoria: "Web",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 53,
-      pergunta: "Qual empresa desenvolveu o Python?",
-      opcoes: ["Google", "Microsoft", "Guido van Rossum", "Apple"],
-      respostaCorreta: 2,
-      categoria: "Linguagens",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 54,
-      pergunta: "O que é 'CI/CD'?",
-      opcoes: ["Integração Contínua/Entrega Contínua", "Computer Interface/Computer Data", "Continuous Input/Continuous Output", "Code Integration/Code Deployment"],
-      respostaCorreta: 0,
-      categoria: "DevOps",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 55,
-      pergunta: "Qual destes é um protocolo de transferência de arquivos?",
-      opcoes: ["HTTP", "SMTP", "FTP", "TCP"],
-      respostaCorreta: 2,
-      categoria: "Redes",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 56,
-      pergunta: "O que é 'OOP'?",
-      opcoes: ["Object-Oriented Programming", "Online Operation Protocol", "Object Operation Program", "Online Object Programming"],
-      respostaCorreta: 0,
-      categoria: "Linguagens",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 57,
-      pergunta: "Qual destes é um serviço de cloud da Amazon?",
-      opcoes: ["Azure", "Google Cloud", "AWS", "IBM Cloud"],
-      respostaCorreta: 2,
-      categoria: "Cloud",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 58,
-      pergunta: "O que é 'JSON'?",
-      opcoes: ["JavaScript Object Notation", "Java System Object Network", "JavaScript Online Notation", "Java Standard Object Notation"],
-      respostaCorreta: 0,
-      categoria: "Formato de Dados",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 59,
-      pergunta: "Qual destes é um algoritmo de ordenação?",
-      opcoes: ["Binary Search", "Quick Sort", "Linear Search", "Depth-First Search"],
-      respostaCorreta: 1,
-      categoria: "Algoritmos",
-      dificuldade: "Médio",
-    ),
-    Pergunta(
-      id: 60,
-      pergunta: "O que é 'MVC'?",
-      opcoes: ["Model-View-Controller", "Main-View-Component", "Model-View-Component", "Main-View-Controller"],
-      respostaCorreta: 0,
-      categoria: "Arquitetura",
-      dificuldade: "Médio",
-    ),
-
-    // NÍVEL 4-10 - DIFÍCEIS (40 perguntas)
-    Pergunta(
-      id: 61,
-      pergunta: "O que é 'polimorfismo' em programação orientada a objetos?",
-      opcoes: ["Herança de classes", "Capacidade de um objeto se comportar de múltiplas formas", "Encapsulamento de dados", "Abstração de implementação"],
-      respostaCorreta: 1,
-      categoria: "POO",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 62,
-      pergunta: "Qual a complexidade do algoritmo Quick Sort no pior caso?",
-      opcoes: ["O(n log n)", "O(n²)", "O(log n)", "O(1)"],
-      respostaCorreta: 1,
-      categoria: "Algoritmos",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 63,
-      pergunta: "O que é 'recursão'?",
-      opcoes: ["Um loop infinito", "Uma função que chama a si mesma", "Uma estrutura de dados", "Um tipo de variável"],
-      respostaCorreta: 1,
-      categoria: "Algoritmos",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 64,
-      pergunta: "Qual destes NÃO é um princípio SOLID?",
-      opcoes: ["Single Responsibility", "Open/Closed", "Interface Segregation", "Multiple Inheritance"],
-      respostaCorreta: 3,
-      categoria: "POO",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 65,
-      pergunta: "O que é 'lambda calculus'?",
-      opcoes: ["Um sistema formal em lógica matemática", "Um tipo de cálculo integral", "Uma linguagem de programação", "Um algoritmo de busca"],
-      respostaCorreta: 0,
-      categoria: "Teoria",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 66,
-      pergunta: "Qual a diferença entre 'thread' e 'process'?",
-      opcoes: ["Threads compartilham memória, processos não", "Processos são mais leves que threads", "Não há diferença", "Threads não compartilham recursos"],
-      respostaCorreta: 0,
-      categoria: "Sistemas Operacionais",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 67,
-      pergunta: "O que é 'garbage collection'?",
-      opcoes: ["Coleta de lixo em memória", "Limpeza de arquivos temporários", "Organização de dados", "Backup automático"],
-      respostaCorreta: 0,
-      categoria: "Linguagens",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 68,
-      pergunta: "Qual a complexidade do algoritmo de busca binária?",
-      opcoes: ["O(n)", "O(n²)", "O(log n)", "O(1)"],
-      respostaCorreta: 2,
-      categoria: "Algoritmos",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 69,
-      pergunta: "O que é 'ACID' em bancos de dados?",
-      opcoes: ["Atomicity, Consistency, Isolation, Durability", "Access, Control, Integrity, Data", "Algorithm, Code, Interface, Data", "Analysis, Control, Implementation, Design"],
-      respostaCorreta: 0,
-      categoria: "Banco de Dados",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 70,
-      pergunta: "Qual destes é um padrão de projeto criacional?",
-      opcoes: ["Singleton", "Adapter", "Observer", "Strategy"],
-      respostaCorreta: 0,
-      categoria: "Padrões",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 71,
-      pergunta: "O que é 'Big O notation'?",
-      opcoes: ["Notação para descrever complexidade de algoritmos", "Um tipo de variável", "Uma linguagem de programação", "Um protocolo de rede"],
-      respostaCorreta: 0,
-      categoria: "Algoritmos",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 72,
-      pergunta: "Qual a diferença entre 'compilação' e 'interpretação'?",
-      opcoes: ["Compilação traduz todo o código de uma vez, interpretação linha por linha", "Interpretação é mais rápida que compilação", "Não há diferença", "Compilação é para scripts, interpretação para programas"],
-      respostaCorreta: 0,
-      categoria: "Linguagens",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 73,
-      pergunta: "O que é 'referential transparency'?",
-      opcoes: ["Transparência em interfaces gráficas", "Uma função cujo resultado depende apenas dos seus inputs", "Um tipo de variável global", "Um padrão de segurança"],
-      respostaCorreta: 1,
-      categoria: "Programação Funcional",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 74,
-      pergunta: "Qual destes é um algoritmo de consenso distribuído?",
-      opcoes: ["Raft", "Quick Sort", "Dijkstra", "A*"],
-      respostaCorreta: 0,
-      categoria: "Sistemas Distribuídos",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 75,
-      pergunta: "O que é 'CAP theorem'?",
-      opcoes: ["Consistency, Availability, Partition Tolerance", "Code, Algorithm, Program", "Computer, Access, Protocol", "Control, Access, Permission"],
-      respostaCorreta: 0,
-      categoria: "Sistemas Distribuídos",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 76,
-      pergunta: "Qual a complexidade do algoritmo Merge Sort?",
-      opcoes: ["O(n log n)", "O(n²)", "O(log n)", "O(1)"],
-      respostaCorreta: 0,
-      categoria: "Algoritmos",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 77,
-      pergunta: "O que é 'dependency injection'?",
-      opcoes: ["Injeção de código malicioso", "Padrão onde dependências são fornecidas externamente", "Um tipo de herança", "Método de otimização"],
-      respostaCorreta: 1,
-      categoria: "Padrões",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 78,
-      pergunta: "Qual destes é um protocolo de roteamento?",
-      opcoes: ["BGP", "HTTP", "FTP", "SMTP"],
-      respostaCorreta: 0,
-      categoria: "Redes",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 79,
-      pergunta: "O que é 'monad' em programação funcional?",
-      opcoes: ["Um tipo de variável", "Uma estrutura que representa computações", "Um loop", "Uma condição"],
-      respostaCorreta: 1,
-      categoria: "Programação Funcional",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 80,
-      pergunta: "Qual a diferença entre 'synchronous' e 'asynchronous'?",
-      opcoes: ["Síncrono bloqueia, assíncrono não bloqueia", "Assíncrono é mais lento", "Não há diferença", "Síncrono é para redes, assíncrono para local"],
-      respostaCorreta: 0,
-      categoria: "Programação",
-      dificuldade: "Difícil",
-    ),
-    // Continue até 100...
-    Pergunta(
-      id: 81,
-      pergunta: "O que é 'quantum computing'?",
-      opcoes: ["Computação usando bits quânticos", "Computação muito rápida", "Computação em nuvem", "Computação móvel"],
-      respostaCorreta: 0,
-      categoria: "Computação Quântica",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 82,
-      pergunta: "Qual destes é um algoritmo de machine learning?",
-      opcoes: ["Random Forest", "Quick Sort", "Binary Search", "Bubble Sort"],
-      respostaCorreta: 0,
-      categoria: "IA",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 83,
-      pergunta: "O que é 'neural network'?",
-      opcoes: ["Rede de computadores", "Rede neural artificial", "Protocolo de rede", "Tipo de banco de dados"],
-      respostaCorreta: 1,
-      categoria: "IA",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 84,
-      pergunta: "Qual a complexidade do algoritmo de Dijkstra?",
-      opcoes: ["O(V + E log V)", "O(V²)", "O(log V)", "O(1)"],
-      respostaCorreta: 0,
-      categoria: "Algoritmos",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 85,
-      pergunta: "O que é 'blockchain'?",
-      opcoes: ["Um tipo de banco de dados distribuído", "Um protocolo de email", "Um algoritmo de ordenação", "Uma linguagem de programação"],
-      respostaCorreta: 0,
-      categoria: "Tecnologias",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 86,
-      pergunta: "Qual destes é um protocolo da camada de transporte?",
-      opcoes: ["IP", "TCP", "HTTP", "DNS"],
-      respostaCorreta: 1,
-      categoria: "Redes",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 87,
-      pergunta: "O que é 'microservices architecture'?",
-      opcoes: ["Arquitetura de serviços muito pequenos", "Arquitetura baseada em serviços independentes", "Arquitetura monolítica", "Arquitetura cliente-servidor"],
-      respostaCorreta: 1,
-      categoria: "Arquitetura",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 88,
-      pergunta: "Qual a diferença entre 'SQL' e 'NoSQL'?",
-      opcoes: ["SQL é relacional, NoSQL é não-relacional", "NoSQL é mais antigo", "SQL é mais rápido", "Não há diferença"],
-      respostaCorreta: 0,
-      categoria: "Banco de Dados",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 89,
-      pergunta: "O que é 'RESTful API'?",
-      opcoes: ["API que segue princípios REST", "API muito rápida", "API para redes sociais", "API para mobile"],
-      respostaCorreta: 0,
-      categoria: "Web",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 90,
-      pergunta: "Qual destes é um padrão arquitetural?",
-      opcoes: ["MVC", "Singleton", "Factory", "Observer"],
-      respostaCorreta: 0,
-      categoria: "Arquitetura",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 91,
-      pergunta: "O que é 'continuous integration'?",
-      opcoes: ["Integração manual de código", "Integração contínua de mudanças de código", "Testes manuais", "Deploy manual"],
-      respostaCorreta: 1,
-      categoria: "DevOps",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 92,
-      pergunta: "Qual a complexidade do algoritmo A*?",
-      opcoes: ["O(b^d)", "O(n log n)", "O(1)", "O(n)"],
-      respostaCorreta: 0,
-      categoria: "Algoritmos",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 93,
-      pergunta: "O que é 'docker container'?",
-      opcoes: ["Um tipo de virtualização a nível de sistema operacional", "Um banco de dados", "Um protocolo de rede", "Uma linguagem"],
-      respostaCorreta: 0,
-      categoria: "Virtualização",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 94,
-      pergunta: "Qual destes é um algoritmo de consenso blockchain?",
-      opcoes: ["Proof of Work", "Quick Sort", "Merge Sort", "Binary Search"],
-      respostaCorreta: 0,
-      categoria: "Blockchain",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 95,
-      pergunta: "O que é 'kubernetes'?",
-      opcoes: ["Sistema de orquestração de containers", "Linguagem de programação", "Banco de dados", "Protocolo de rede"],
-      respostaCorreta: 0,
-      categoria: "DevOps",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 96,
-      pergunta: "Qual a diferença entre 'HTTP' e 'HTTPS'?",
-      opcoes: ["HTTPS é seguro, HTTP não", "HTTP é mais rápido", "Não há diferença", "HTTPS é para mobile"],
-      respostaCorreta: 0,
-      categoria: "Web",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 97,
-      pergunta: "O que é 'graphQL'?",
-      opcoes: ["Linguagem de consulta para APIs", "Linguagem de programação", "Banco de dados", "Protocolo de rede"],
-      respostaCorreta: 0,
-      categoria: "Web",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 98,
-      pergunta: "Qual destes é um tipo de teste de software?",
-      opcoes: ["Unit Test", "Quick Test", "Simple Test", "Fast Test"],
-      respostaCorreta: 0,
-      categoria: "Testes",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 99,
-      pergunta: "O que é 'load balancing'?",
-      opcoes: ["Distribuição de carga entre servidores", "Balanceamento de bateria", "Otimização de código", "Compressão de dados"],
-      respostaCorreta: 0,
-      categoria: "Infraestrutura",
-      dificuldade: "Difícil",
-    ),
-    Pergunta(
-      id: 100,
-      pergunta: "Qual a complexidade do algoritmo de Fibonacci recursivo?",
-      opcoes: ["O(2^n)", "O(n log n)", "O(1)", "O(n)"],
-      respostaCorreta: 0,
-      categoria: "Algoritmos",
-      dificuldade: "Difícil",
-    ),
-  ];
-
-  static List<Pergunta> obterPerguntasPorNivel(int nivel) {
-    List<Pergunta> perguntasFiltradas = [];
-
-    if (nivel <= 3) {
-      perguntasFiltradas = _perguntas.where((p) => p.dificuldade == "Fácil").toList();
-    } else if (nivel <= 6) {
-      perguntasFiltradas = _perguntas.where((p) => p.dificuldade == "Fácil" || p.dificuldade == "Médio").toList();
-    } else {
-      perguntasFiltradas = List.from(_perguntas);
+  static List<Pergunta> obterPerguntasPorNivel(int nivel, {String? categoria}) {
+    if (categoria != null) {
+      return _obterPerguntasPorCategoria(categoria);
     }
-
-    // Embaralha as perguntas
-    perguntasFiltradas.shuffle();
-
-    // Retorna no máximo 5 perguntas por nível
-    return perguntasFiltradas.take(5).toList();
+    
+    switch (nivel) {
+      case 1:
+        return _obterPerguntasNivel1();
+      case 2:
+        return _obterPerguntasNivel2();
+      case 3:
+        return _obterPerguntasNivel3();
+      default:
+        return _obterPerguntasNivel1();
+    }
   }
 
-  static int calcularPontuacao(bool acertou, String dificuldade, int tempoResposta) {
-    int pontosBase = acertou ? 10 : 0;
-    int bonusDificuldade = 0;
+  static List<Pergunta> _obterPerguntasPorCategoria(String categoria) {
+    switch (categoria) {
+      case 'Linguagens':
+        return [
+          Pergunta(
+            id: 101,
+            pergunta: "Qual linguagem é conhecida como 'a linguagem da web'?",
+            opcoes: ["Python", "Java", "JavaScript", "C++"],
+            respostaCorreta: 2,
+            categoria: "Linguagens",
+            dificuldade: "Fácil"
+          ),
+          Pergunta(
+            id: 102,
+            pergunta: "Qual linguagem usa 'print()' para exibir texto?",
+            opcoes: ["Java", "Python", "C#", "PHP"],
+            respostaCorreta: 1,
+            categoria: "Linguagens",
+            dificuldade: "Fácil"
+          ),
+          Pergunta(
+            id: 103,
+            pergunta: "Qual linguagem é compilada para bytecode e roda na JVM?",
+            opcoes: ["Python", "JavaScript", "Java", "Ruby"],
+            respostaCorreta: 2,
+            categoria: "Linguagens",
+            dificuldade: "Médio"
+          ),
+        ];
+      
+      case 'Hardware':
+        return [
+          Pergunta(
+            id: 201,
+            pergunta: "O que significa CPU?",
+            opcoes: ["Computer Processing Unit", "Central Processing Unit", "Central Program Utility", "Computer Program Unit"],
+            respostaCorreta: 1,
+            categoria: "Hardware",
+            dificuldade: "Fácil"
+          ),
+          Pergunta(
+            id: 202,
+            pergunta: "Qual componente armazena dados temporariamente?",
+            opcoes: ["HD", "SSD", "RAM", "Processador"],
+            respostaCorreta: 2,
+            categoria: "Hardware",
+            dificuldade: "Fácil"
+          ),
+        ];
+      
+      case 'História':
+        return [
+          Pergunta(
+            id: 301,
+            pergunta: "Qual foi o primeiro computador programável?",
+            opcoes: ["ENIAC", "Harvard Mark I", "Analytical Engine", "UNIVAC"],
+            respostaCorreta: 2,
+            categoria: "História",
+            dificuldade: "Médio"
+          ),
+        ];
+      
+      default:
+        return _obterPerguntasNivel1();
+    }
+  }
 
+  static List<Pergunta> _obterPerguntasNivel1() {
+    return [
+      Pergunta(
+        id: 1,
+        pergunta: "O que significa 'HTML'?",
+        opcoes: [
+          "Hyper Text Markup Language",
+          "High Tech Modern Language", 
+          "Hyper Transfer Markup Language",
+          "Home Tool Markup Language"
+        ],
+        respostaCorreta: 0,
+        categoria: "Web",
+        dificuldade: "Fácil"
+      ),
+      Pergunta(
+        id: 2,
+        pergunta: "Qual empresa desenvolveu o Windows?",
+        opcoes: ["Apple", "Google", "Microsoft", "IBM"],
+        respostaCorreta: 2,
+        categoria: "Sistemas Operacionais",
+        dificuldade: "Fácil"
+      ),
+    ];
+  }
+
+  static List<Pergunta> _obterPerguntasNivel2() {
+    return [
+      Pergunta(
+        id: 3,
+        pergunta: "O que é um algoritmo?",
+        opcoes: [
+          "Um tipo de hardware",
+          "Uma sequência de passos para resolver um problema", 
+          "Uma linguagem de programação",
+          "Um sistema operacional"
+        ],
+        respostaCorreta: 1,
+        categoria: "Conceitos",
+        dificuldade: "Fácil"
+      ),
+    ];
+  }
+
+  static List<Pergunta> _obterPerguntasNivel3() {
+    return [
+      Pergunta(
+        id: 4,
+        pergunta: "Qual protocolo é usado para emails?",
+        opcoes: ["HTTP", "FTP", "SMTP", "TCP"],
+        respostaCorreta: 2,
+        categoria: "Internet",
+        dificuldade: "Médio"
+      ),
+    ];
+  }
+
+  static int calcularPontuacao(bool acertou, String dificuldade, int tempoUsado) {
+    if (!acertou) return 0;
+
+    int pontosBase;
     switch (dificuldade) {
-      case "Médio":
-        bonusDificuldade = 5;
-        break;
       case "Difícil":
-        bonusDificuldade = 10;
+        pontosBase = 100;
         break;
+      case "Médio":
+        pontosBase = 75;
+        break;
+      default:
+        pontosBase = 50;
     }
 
-    int bonusTempo = (30 - tempoResposta) > 0 ? (30 - tempoResposta) ~/ 3 : 0;
+    // Bônus por resposta rápida
+    int bonusTempo = 0;
+    if (tempoUsado <= 10) bonusTempo = 25;
+    else if (tempoUsado <= 20) bonusTempo = 15;
 
-    return pontosBase + bonusDificuldade + bonusTempo;
+    return pontosBase + bonusTempo;
   }
 }
