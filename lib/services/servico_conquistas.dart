@@ -5,14 +5,11 @@ class ServicoConquistas {
   final ServicoBancoDados _bancoDados = ServicoBancoDados();
 
   static final List<Conquista> conquistasBase = [
-    // Conquistas originais
     Conquista(id: 1, titulo: 'Primeiros Passos', descricao: 'Complete o nível 1', icone: '🎯', pontosRecompensa: 50, tipo: 'nivel', valorRequisito: 1),
     Conquista(id: 2, titulo: 'Colecionador', descricao: 'Acumule 100 moedas', icone: '💰', pontosRecompensa: 100, tipo: 'moedas', valorRequisito: 100),
     Conquista(id: 3, titulo: 'Veterano', descricao: 'Alcance o nível 5', icone: '⭐', pontosRecompensa: 200, tipo: 'nivel', valorRequisito: 5),
     Conquista(id: 4, titulo: 'Mestre dos Pontos', descricao: 'Faça 1000 pontos', icone: '🏆', pontosRecompensa: 300, tipo: 'pontuacao', valorRequisito: 1000),
     Conquista(id: 5, titulo: 'Comprador', descricao: 'Compre seu primeiro item', icone: '🛒', pontosRecompensa: 150, tipo: 'loja', valorRequisito: 1),
-
-    // Novas conquistas avançadas
     Conquista(id: 6, titulo: 'Mestre do Tempo', descricao: 'Responda 10 perguntas com menos de 5 segundos', icone: '⚡', pontosRecompensa: 100, tipo: 'tempo', valorRequisito: 10),
     Conquista(id: 7, titulo: 'Perfeccionista', descricao: 'Complete um nível com 100% de acertos', icone: '💯', pontosRecompensa: 150, tipo: 'perfeicao', valorRequisito: 1),
     Conquista(id: 8, titulo: 'Colecionador Supremo', descricao: 'Compre todos os itens da loja', icone: '🛍️', pontosRecompensa: 200, tipo: 'loja', valorRequisito: 10),
@@ -48,7 +45,7 @@ class ServicoConquistas {
 
         if (desbloquear) {
           await _bancoDados.desbloquearConquista(usuarioId, conquista.id);
-          // Poderia adicionar notificação aqui
+          print('🎉 Conquista desbloqueada: ${conquista.titulo}');
         }
       }
     }
@@ -70,8 +67,9 @@ class ServicoConquistas {
         icone: base.icone,
         pontosRecompensa: base.pontosRecompensa,
         desbloqueada: conquistaUsuario.isNotEmpty ? conquistaUsuario['desbloqueada'] == 1 : false,
-        dataDesbloqueio: conquistaUsuario.isNotEmpty ?
-          DateTime.fromMillisecondsSinceEpoch(conquistaUsuario['data_desbloqueio']) : null,
+        dataDesbloqueio: conquistaUsuario.isNotEmpty && conquistaUsuario['data_desbloqueio'] != null
+            ? DateTime.fromMillisecondsSinceEpoch(conquistaUsuario['data_desbloqueio'])
+            : null,
         tipo: base.tipo,
         valorRequisito: base.valorRequisito,
       );

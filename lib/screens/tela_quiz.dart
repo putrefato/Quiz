@@ -4,19 +4,22 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/usuario.dart';
 import '../models/progresso_jogo.dart';
 import '../models/pergunta.dart';
+import '../models/modo_jogo.dart';
 import '../services/servico_jogo.dart';
 import '../services/servico_quiz.dart';
 import '../widgets/botao_personalizado.dart';
 import '../widgets/cartao_progresso.dart';
-import '../models/modo_jogo.dart'; 
 
 class TelaQuiz extends StatefulWidget {
   final Usuario usuario;
   final int nivelInicial;
-  // final ConfiguracaoModoJogo? configuracaoModo; 
+  final ConfiguracaoModoJogo? configuracaoModo;
 
-  const TelaQuiz({Key? key, required this.usuario, this.nivelInicial = 1,
-  //this.configuracaoModo,
+  const TelaQuiz({
+    Key? key,
+    required this.usuario,
+    this.nivelInicial = 1,
+    this.configuracaoModo,
   }) : super(key: key);
 
   @override
@@ -67,9 +70,16 @@ class _TelaQuizState extends State<TelaQuiz> {
       _perguntaIndex = 0;
       _respostaSelecionada = null;
       _mostrarResultado = false;
-      _tempoRestante = 30;
+      _tempoRestante = _obterTempoPorPergunta();
     });
     _iniciarTimer();
+  }
+
+  int _obterTempoPorPergunta() {
+    if (widget.configuracaoModo != null) {
+      return widget.configuracaoModo!.modo.tempoPorPergunta;
+    }
+    return 30;
   }
 
   void _iniciarTimer() {
@@ -117,7 +127,7 @@ class _TelaQuizState extends State<TelaQuiz> {
     });
 
     final bool acertou = _respostaSelecionada == _perguntasAtuais[_perguntaIndex].respostaCorreta;
-    final int tempoUsado = 30 - _tempoRestante;
+    final int tempoUsado = _obterTempoPorPergunta() - _tempoRestante;
     final int pontosGanhos = ServicoQuiz.calcularPontuacao(
       acertou,
       _perguntasAtuais[_perguntaIndex].dificuldade,
@@ -140,7 +150,7 @@ class _TelaQuizState extends State<TelaQuiz> {
         _perguntaIndex++;
         _respostaSelecionada = null;
         _mostrarResultado = false;
-        _tempoRestante = 30;
+        _tempoRestante = _obterTempoPorPergunta();
       });
       _iniciarTimer();
     } else {

@@ -26,7 +26,7 @@ enum ModoJogo {
     descricao: 'Máximo de pontos em 2 minutos',
     icone: '⏱️',
     cor: 0xFFFF9800,
-    tempoPorPergunta: 0, // Tempo total, não por pergunta
+    tempoPorPergunta: 0,
     vidas: 999,
     permiteDicas: true,
   ),
