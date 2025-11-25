@@ -8,13 +8,16 @@ import '../services/servico_jogo.dart';
 import '../services/servico_quiz.dart';
 import '../widgets/botao_personalizado.dart';
 import '../widgets/cartao_progresso.dart';
+import '../models/modo_jogo.dart'; 
 
 class TelaQuiz extends StatefulWidget {
   final Usuario usuario;
   final int nivelInicial;
-  final ConfiguracaoModoJogo? configuracaoModo; 
+  // final ConfiguracaoModoJogo? configuracaoModo; 
 
-  const TelaQuiz({Key? key, required this.usuario, this.nivelInicial = 1,this.configuracaoModo,}) : super(key: key);
+  const TelaQuiz({Key? key, required this.usuario, this.nivelInicial = 1,
+  //this.configuracaoModo,
+  }) : super(key: key);
 
   @override
   _TelaQuizState createState() => _TelaQuizState();

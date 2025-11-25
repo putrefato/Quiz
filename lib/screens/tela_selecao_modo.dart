@@ -24,17 +24,17 @@ class _TelaSelecaoModoState extends State<TelaSelecaoModo> {
   void _iniciarJogo() {
     if (_modoSelecionado == null) return;
 
-    final configuracao = ConfiguracaoModoJogo(
-      modo: _modoSelecionado!,
-      categoria: _modoSelecionado == ModoJogo.CATEGORIA ? _categoriaSelecionada : null,
-    );
+    //final configuracao = ConfiguracaoModoJogo(
+    //  modo: _modoSelecionado!,
+    //  categoria: _modoSelecionado == ModoJogo.CATEGORIA ? _categoriaSelecionada : null,
+    //);
 
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => TelaQuiz(
           usuario: widget.usuario,
-          configuracaoModo: configuracao,
+          //configuracaoModo: configuracao,
         ),
       ),
     );

@@ -20,18 +20,7 @@ class ServicoBancoDados {
     return _bancoDados!;
   }
 
-  Future<Map<String, dynamic>> obterEstatisticasUsuario(int usuarioId) async {
-  return {
-    'nivel_atual': 6,
-    'moedas': 500,
-    'pontuacao_total': 3200,
-    'respostas_rapidas': 8,
-    'niveis_perfeitos': 2,
-    'dias_consecutivos': 5,
-    'dicas_usadas': 3,
-    'total_acertos': 85,
-  };
-}
+
 
 /*************  ✨ Windsurf Command ⭐  *************/
   /// Abre o caminho para o banco de dados e inicia o banco com
