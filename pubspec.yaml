@@ -1,8 +1,6 @@
 name: QuizEtec
 description: "Um jogo educativo de quiz sobre história da computação"
-
 publish_to: 'none'
-
 version: 1.0.0+1
 
 environment:
@@ -11,12 +9,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sqflite_common_ffi: ^2.3.1
-  shared_preferences: ^2.2.2
+  audioplayers: ^5.2.1
   google_fonts: ^6.1.0
-  crypto: ^3.0.3
+  shared_preferences: ^2.2.2
+  sqflite_common_ffi: ^2.3.1
   path: ^1.8.3
-  audioplayers: ^5.2.1  # MOVER PARA AQUI!
+  crypto: ^3.0.3
 
 dev_dependencies:
   flutter_test:
@@ -27,8 +25,4 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/audio/bg_music.mp3
-    - assets/audio/click.mp3
-    # Adicione outras pastas de assets se necessário
-    # - assets/images/
-    # - assets/icons/
+    - assets/audio/
