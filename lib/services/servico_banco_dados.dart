@@ -82,17 +82,6 @@ class ServicoBancoDados {
     ''');
 
     await db.execute('''
-      CREATE TABLE conquistas_usuario(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        usuario_id INTEGER NOT NULL,
-        conquista_id INTEGER NOT NULL,
-        desbloqueada INTEGER DEFAULT 0,
-        data_desbloqueio INTEGER,
-        FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE CASCADE
-      )
-    ''');
-
-    await db.execute('''
       CREATE TABLE inventario_usuario(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         usuario_id INTEGER NOT NULL,

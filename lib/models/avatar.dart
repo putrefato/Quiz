@@ -4,7 +4,7 @@ class ItemAvatar {
   final String tipo; // 'rosto', 'cabelo', 'roupa', 'acessorio'
   final String icone;
   final int preco;
-  final bool desbloqueado;
+  bool desbloqueado;
 
   ItemAvatar({
     required this.id,
@@ -17,12 +17,12 @@ class ItemAvatar {
 }
 
 class AvatarUsuario {
-  final int usuarioId;
-  final String rosto;
-  final String cabelo;
-  final String roupa;
-  final String acessorio;
-  final String corFundo;
+    int usuarioId;
+    String rosto;
+    String cabelo;
+    String roupa;
+    String acessorio;
+    String corFundo;
 
   AvatarUsuario({
     required this.usuarioId,

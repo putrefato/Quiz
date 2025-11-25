@@ -12,8 +12,9 @@ import '../widgets/cartao_progresso.dart';
 class TelaQuiz extends StatefulWidget {
   final Usuario usuario;
   final int nivelInicial;
+  final ConfiguracaoModoJogo? configuracaoModo; 
 
-  const TelaQuiz({Key? key, required this.usuario, this.nivelInicial = 1}) : super(key: key);
+  const TelaQuiz({Key? key, required this.usuario, this.nivelInicial = 1,this.configuracaoModo,}) : super(key: key);
 
   @override
   _TelaQuizState createState() => _TelaQuizState();

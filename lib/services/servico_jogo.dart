@@ -24,7 +24,9 @@ class ServicoJogo {
       progresso.usuarioId,
       progresso.nivel,
       progresso.pontuacao,
-      progresso.moedas
+      progresso.moedas,
+      0,
+      0,
     );
   }
 }

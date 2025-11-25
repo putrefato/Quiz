@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum ModoJogo {
   CLASSICO(
     nome: 'Clássico',

@@ -86,6 +86,6 @@ class GerenciadorAcessibilidade {
   // Verificar se é necessário alto contraste
   bool precisaAltoContraste(BuildContext context) {
     final brightness = MediaQuery.of(context).platformBrightness;
-    return _altoContraste || brightness == Brightness.low;
+    return _altoContraste || brightness == Brightness.dark;
   }
 }
