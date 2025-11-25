@@ -20,6 +20,29 @@ class ServicoBancoDados {
     return _bancoDados!;
   }
 
+  Future<Map<String, dynamic>> obterEstatisticasUsuario(int usuarioId) async {
+  return {
+    'nivel_atual': 6,
+    'moedas': 500,
+    'pontuacao_total': 3200,
+    'respostas_rapidas': 8,
+    'niveis_perfeitos': 2,
+    'dias_consecutivos': 5,
+    'dicas_usadas': 3,
+    'total_acertos': 85,
+  };
+}
+
+/*************  ✨ Windsurf Command ⭐  *************/
+  /// Abre o caminho para o banco de dados e inicia o banco com
+  /// as op es de vers o e onCreate.
+  ///
+  /// Retorna o banco de dados pronto para uso.
+  ///
+  /// Throws a [DatabaseException] se houver um erro ao abrir o banco.
+  ///
+  /// Retorna um [Future] que completa com o banco de dados quando estiver pronto.
+/*******  080ec902-ccbd-4e80-b3b4-0d465da032a0  *******/
   Future<Database> _iniciarBancoDados() async {
     String caminho = join(await getDatabasesPath(), 'banco_jogo.db');
     return await databaseFactory.openDatabase(

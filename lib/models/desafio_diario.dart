@@ -6,10 +6,10 @@ class DesafioDiario {
   final int recompensaMoedas;
   final int recompensaPontos;
   int progressoAtual; // MUDADO: removido final
-  final int progressoNecessario;
-  final String tipo;
+  int progressoNecessario;
+  String tipo;
   bool concluido; // MUDADO: removido final
-  final DateTime dataExpiracao;
+  DateTime dataExpiracao;
 
   DesafioDiario({
     required this.id,
