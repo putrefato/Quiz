@@ -16,6 +16,7 @@ dependencies:
   google_fonts: ^6.1.0
   crypto: ^3.0.3
   path: ^1.8.3
+  audioplayers: ^5.2.1  # MOVER PARA AQUI!
 
 dev_dependencies:
   flutter_test:
@@ -26,8 +27,8 @@ flutter:
   uses-material-design: true
 
   assets:
-  - assets/audio/bg_music.mp3
-  - assets/audio/click.mp3
-
-  dependencies:
-    audioplayers: ^5.2.1
+    - assets/audio/bg_music.mp3
+    - assets/audio/click.mp3
+    # Adicione outras pastas de assets se necessário
+    # - assets/images/
+    # - assets/icons/
