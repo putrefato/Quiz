@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/tela_login.dart';
-import 'screens/tela_inicial.dart';
 import 'services/servico_autenticacao.dart';
 import 'services/servico_banco_dados.dart';
 import 'theme/tema_app.dart';
+import 'screens/tela_inicial.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,21 +13,21 @@ void main() async {
   try {
     final bancoDados = ServicoBancoDados();
     await bancoDados.bancoDados;
-    print('Banco de dados inicializado com sucesso');
+    print('✅ Banco de dados inicializado com sucesso');
   } catch (e) {
-    print('Erro ao inicializar banco de dados: $e');
+    print('❌ Erro ao inicializar banco de dados: $e');
   }
 
-  runApp(const MeuJogoApp());
+  runApp(const QuizEtecApp());
 }
 
-class MeuJogoApp extends StatelessWidget {
-  const MeuJogoApp({Key? key}) : super(key: key);
+class QuizEtecApp extends StatelessWidget {
+  const QuizEtecApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Aventura do Herói',
+      title: 'Quiz Etec - Computação',  // NOME CORRETO AQUI
       theme: TemaApp.temaClaro,
       home: FutureBuilder(
         future: ServicoAutenticacao().obterUsuarioAtual(),
@@ -54,7 +54,7 @@ class MeuJogoApp extends StatelessWidget {
                   children: [
                     const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
                     const SizedBox(height: 20),
-                    Text('Carregando sua aventura...', style: GoogleFonts.poppins(color: Colors.white, fontSize: 16)),
+                    Text('Carregando Quiz Etec...', style: GoogleFonts.poppins(color: Colors.white, fontSize: 16)),
                   ],
                 ),
               ),

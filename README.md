@@ -1,4 +1,4 @@
-# aventura_heroi
+# QuizEtec
 
 A new Flutter project.
 
